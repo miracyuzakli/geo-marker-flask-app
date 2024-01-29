@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Harita Uygulaması</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/index.css') }}">
+
+
+       
+</head>
+
+<body class="dark">
+
+    <div class="container123">
+        <div class="map-container">
+
+            <div id="mapid"></div>
+
+
+
+            <div class="button-container">
+                <button class="map-buttons" id="button-clear-all" onclick="clearAll()">Clear</button>
+                <button class="map-buttons" id="button-undo" onclick="undoLast()">Undo</button>
+
+                
+            </div>
+
+
+        </div>
+
+        <div class="right-menu">
+
+
+            <div class="left-menu-item-container">
+                <div class="left-menu-title">
+                     Cities
+                </div>
+
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <label for="option-cities" class="radio-label-select">City </label>
+
+                        <select name="" id="option-cities" class="right-menu-selects" onchange="updateMapToSelectedCity()">
+                            <option value="[43.7, -79.42]">Toronto</option>
+                            <option value="[45.42, -75.69]">Ottawa</option>
+                            <option value="[45.50, -73.57]">Montreal</option>
+                            <option value="[49.28, -123.12]">Vancouver</option>
+                            <option value="[53.55, -113.49]">Edmonton</option>
+                            <option value="[51.05, -114.07]">Calgary</option>
+                            <option value="[46.81, -71.21]">Quebec City</option>
+                            <option value="[44.65, -63.57]">Halifax</option>
+                            <option value="[49.89, -97.14]">Winnipeg</option>
+                            <option value="[42.98, -81.24]">London</option>
+                        </select>
+
+
+                    </div>
+                   
+
+
+                </div>
+
+            </div>
+
+
+            <div class="left-menu-item-container">
+                <div class="left-menu-title">
+                    Sale Date
+                </div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="option-30days" name="sale-date-radios" class="radio-button">
+                        <label for="option-30days" class="radio-label">30 Days</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="option-3months" name="sale-date-radios" class="radio-button">
+                        <label for="option-3months" class="radio-label">3 Months</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="option-6months" name="sale-date-radios" class="radio-button">
+                        <label for="option-6months" class="radio-label">6 Months</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="option-1year" name="sale-date-radios" class="radio-button">
+                        <label for="option-1year" class="radio-label">1 Year</label>
+                    </div>
+                </div>
+
+
+            </div>
+
+
+
+            <div class="left-menu-item-container">
+                <div class="left-menu-title">
+                    Property Type
+                </div>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="option-All" name="property-type-radios" class="radio-button">
+                        <label for="option-All" class="radio-label">All</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="option-freehold" name="property-type-radios" class="radio-button">
+                        <label for="option-freehold" class="radio-label">Freehold</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="option-condo" name="property-type-radios" class="radio-button">
+                        <label for="option-condo" class="radio-label">Condo</label>
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="left-menu-item-container">
+                <div class="left-menu-title">
+                    Price Amount
+                </div>
+
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <label for="option-price-from" class="radio-label-select">From</label>
+
+                        <select name="" id="option-price-from" class="right-menu-selects">
+
+                            <option value="">$0</option>
+                            <option value="">$100</option>
+                            <option value="">$200</option>
+                            <option value="">$300</option>
+
+
+                        </select>
+                    </div>
+                    <div class="radio-option">
+                        <label for="option-price-to" class="radio-label-select">To</label>
+
+                        <select name="" id="option-price-to" class="right-menu-selects">
+
+                            <option value="">$0</option>
+                            <option value="">$100</option>
+                            <option value="">$200</option>
+                            <option value="">$300</option>
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="left-menu-item-container">
+                <div class="left-menu-title">
+                     Lot Size (sq. ft.)
+                </div>
+
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <label for="option-lot-size-from" class="radio-label-select">From</label>
+
+                        <select name="" id="option-lot-size-from" class="right-menu-selects">
+
+                            <option value="">$0</option>
+                           
+
+
+                        </select>
+                    </div>
+                    <div class="radio-option">
+                        <label for="option-lot-size-to" class="radio-label-select">To</label>
+
+                        <select name="" id="option-lot-size-to" class="right-menu-selects">
+
+                            <option value="">100+ acres</option>
+                          
+
+                        </select>
+
+                    </div>
+
+
+                </div>
+
+            </div>
+
+
+            <div class="left-menu-buttons">
+                <button class="map-buttons" id="button-summit-points" onclick="sendCoordinates()">Find Comparables</button>
+            </div>
+
+
+
+        </div>
+    </div>
+
+    
+    <script src="{{ url_for('static',filename='js/index.js') }}"></script>
+
+ 
+</body>
+
+</html>-select

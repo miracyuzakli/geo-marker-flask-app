@@ -1,0 +1,158 @@
+body {
+    background-color: #121212;
+    padding: 5px;
+    font-family: sans-serif;
+}
+
+.container123 {
+    display: flex;
+    gap: 20px;
+}
+
+#mapid {
+    height: 85vh;
+    border-radius: 7px;
+}
+
+.map-container {
+    min-width: 70%;
+    border-radius: 7px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    padding: 20px;
+    background-color: #282828;
+
+}
+
+.button-container {
+    display: flex;
+    margin-top: 10px;
+    gap: 10px;
+
+
+}
+
+.map-buttons {
+    background-color: #382bf0;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 7px;
+    text-align: center;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.map-buttons:hover {
+    background-color: #5e43f3;
+
+}
+
+
+
+
+.right-menu {
+    border-radius: 7px;
+    box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    padding: 20px;
+    width: 100%;
+
+    background-color: #282828;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; 
+
+}
+
+
+.left-menu-item-container {
+    margin-bottom: 40px;
+}
+
+
+.left-menu-title {
+    padding-bottom: 12px;
+    color: white;
+}
+
+
+
+
+.radio-group {
+    display: flex;
+    background-color: #f3f3f3;
+    border: 1px solid #717171;
+    border-radius: 8px;
+    overflow: hidden;
+    background-color: #3f3f3f;
+    color: white;
+
+}
+
+.radio-option {
+    flex: 1;
+    border-left: 1px solid #717171;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.radio-option:first-child {
+    border-left: none;
+}
+
+.radio-label {
+    display: flex;
+    align-items: center;
+    padding: 12px 7px;
+    cursor: pointer;
+}
+
+.radio-button {
+    margin-right: 8px;
+}
+
+.radio-button:checked+.radio-label:before {
+    background-color: #0056b3;
+    border-color: #0056b3;
+}
+
+.radio-button:focus+.radio-label:before {
+    box-shadow: 0 0 0 4px rgba(0, 86, 179, 0.3);
+}
+
+
+
+.right-menu-selects {
+    padding: 12px 18px;
+    border: none;
+    outline: none;
+    width: 100%;
+    text-align: center;
+    margin-right: 10px;
+    background-color: #3f3f3f;
+    color: white;
+    
+
+}
+
+
+.radio-label-select {
+    display: flex;
+    cursor: pointer;
+    left: 0;
+    margin-right: auto;
+    margin-left: 10px;
+
+}
+
+.left-menu-buttons {
+    display: flex;
+    margin-top: auto;
+
+
+}
+
+#button-summit-points {
+
+    width: 100%;
+}
