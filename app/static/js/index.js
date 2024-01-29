@@ -7,6 +7,43 @@ var coordinates = [];
 var markers = [];
 var polyline = null;
 
+
+
+
+
+
+function getSelectedRadioButtonId(radio_name) {
+    var radios = document.getElementsByName(radio_name);
+    for (var i = 0; i < radios.length; i++) {
+        if (radios[i].checked) {
+            return radios[i].value;
+        }
+    }
+    // Eğer hiçbir radio butonu seçili değilse null döndür
+    return null;
+}
+
+
+function getSelectedOptionValue(selectId) {
+    var selectElement = document.getElementById(selectId);
+    if (!selectElement) {
+        console.log('Select elementi bulunamadı.');
+        return null;
+    }
+
+    return selectElement.options[selectElement.selectedIndex].value;
+}
+
+function getSelectedOptionText(selectId) {
+    var selectElement = document.getElementById(selectId);
+    if (!selectElement) {
+        console.log('Select elementi bulunamadı.');
+        return null; // Eğer select elementi bulunamazsa, null döndür
+    }
+
+    return selectElement.options[selectElement.selectedIndex].text;
+}
+
 function updatePolyline() {
     if (polyline) {
         mymap.removeLayer(polyline);
@@ -25,11 +62,64 @@ mymap.on('click', function (e) {
 });
 
 function sendCoordinates() {
+
+    var cities = getSelectedOptionText('option-cities');
+
+    var sale_date_value = getSelectedRadioButtonId('sale-date-radios');
+    var property_type_value = getSelectedRadioButtonId('property-type-radios');
+
+    var price_amount_from = getSelectedOptionValue('option-price-from');
+    var price_amount_to = getSelectedOptionValue('option-price-to');
+
+    var lot_size_from = getSelectedOptionValue('option-lot-size-from');
+    var lot_size_to = getSelectedOptionValue('option-lot-size-to');
+
+    const data = {
+        "city": cities,
+
+        "sale_date": sale_date_value,
+        "property_type": property_type_value,
+
+        "price_amount": {
+            "from": price_amount_from,
+            "to": price_amount_to
+        },
+
+        "lot_size": {
+            "from": lot_size_from,
+            "to": lot_size_to
+        },
+
+        coordinates: coordinates
+
+    }
+
+    console.log(data);
+
+
     $.ajax({
         url: '/send-coordinates',
         type: 'POST',
         contentType: 'application/json',
-        data: JSON.stringify({ coordinates: coordinates }),
+        data: JSON.stringify({
+            "city": cities,
+
+            "sale_date": sale_date_value,
+            "property_type": property_type_value,
+
+            "price_amount": {
+                "from": price_amount_from,
+                "to": price_amount_to
+            },
+
+            "lot_size": {
+                "from": lot_size_from,
+                "to": lot_size_to
+            },
+
+            coordinates: coordinates
+
+        }),
         success: function (response) {
             console.log(response.message);
         },

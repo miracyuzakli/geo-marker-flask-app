@@ -11,8 +11,17 @@ def index():
 
 @app.route("/send-coordinates", methods=["POST"])
 def send_coordinates():
-    coordinates = request.json.get("coordinates")
-    print("Seçilen Koordinatlar:", coordinates)
+
+
+    data = request.json
+    city = data.get('city')
+    sale_date = data.get('sale_date')
+    property_type = data.get('property_type')
+    price_amount = data.get('price_amount')
+    lot_size = data.get('lot_size')
+    coordinates = data.get('coordinates')
+
+
     return jsonify({"status": "success", "message": "Koordinatlar alındı"})
 
 
