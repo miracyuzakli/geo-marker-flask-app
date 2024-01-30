@@ -1,6 +1,6 @@
 from app import app
 from flask import render_template, request, jsonify
-from services import get_request_data
+from services import get_request_data,scrape_function
 
 
 @app.route("/")
@@ -29,3 +29,4 @@ def send_coordinates():
     )
 
     return jsonify({"status": "success", "message": "Koordinatlar alındı"})
+
