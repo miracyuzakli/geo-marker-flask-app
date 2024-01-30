@@ -8,8 +8,36 @@ var markers = [];
 var polyline = null;
 
 
+// // ! Modal
+// // Elemanları seç
+// var modal = document.getElementById("myModal");
+// var btn = document.getElementById("modalBtn");
+// var span = document.getElementsByClassName("close")[0];
 
+// // Butona tıklandığında modalı aç
+// btn.onclick = function () {
+//     modal.style.display = "block";
+// }
 
+// // X butonuna tıklandığında modalı kapat
+// span.onclick = function () {
+//     modal.style.display = "none";
+// }
+
+// // Kullanıcı modal dışında bir yere tıklarsa, modalı kapat
+// window.onclick = function (event) {
+//     if (event.target == modal) {
+//         modal.style.display = "none";
+//     }
+// }
+
+// ! Loading Spin
+ // Yükleme ekranını ve butonunu seç
+ var loadingScreen = document.getElementById("loadingScreen");
+
+ function closeLoadingScreen() {
+     loadingScreen.classList.remove("loading-visible");
+ }
 
 
 function getSelectedRadioButtonId(radio_name) {
@@ -94,8 +122,8 @@ function sendCoordinates() {
 
     }
 
-    console.log(data);
-
+    
+    loadingScreen.classList.toggle("loading-visible");
 
     $.ajax({
         url: '/send-coordinates',
@@ -121,7 +149,15 @@ function sendCoordinates() {
 
         }),
         success: function (response) {
-            console.log(response.message);
+            
+            if (response.status == "success") {
+                closeLoadingScreen();
+                alert("Data has been generated..")
+            } else {
+                console.log("Error!!!")
+            }
+            
+
         },
         error: function (error) {
             console.log(error);
