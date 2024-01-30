@@ -1,7 +1,6 @@
 from app import app
 from flask import render_template, request, jsonify
 from services import get_request_data,scrape_function
-import time
 
 @app.route("/")
 @app.route("/index")
@@ -19,16 +18,15 @@ def send_coordinates():
     lot_size = data.get("lot_size")
     coordinates = data.get("coordinates")
 
-    # get_request_data(
-    #     city=city,
-    #     sale_date=sale_date,
-    #     property_type=property_type,
-    #     price_amount=price_amount,
-    #     lot_size=lot_size,
-    #     coordinates=coordinates
-    # )
+    get_request_data(
+        city=city,
+        sale_date=sale_date,
+        property_type=property_type,
+        price_amount=price_amount,
+        lot_size=lot_size,
+        coordinates=coordinates
+    )
 
-    time.sleep(5)
 
 
     return jsonify({"status": "success"})
