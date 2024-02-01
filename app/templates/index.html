@@ -100,7 +100,15 @@
 
                         <select name="" id="option-cities" class="right-menu-selects"
                             onchange="updateMapToSelectedCity()">
-                            <option value="[46.49, -84.35]">Algoma</option>
+
+                            {% for i in cities %}
+                                
+                                <option value="{{ cities[i] }}">{{ i }}</option>
+
+                            {% endfor %}
+
+
+                            <!-- <option value="[46.49, -84.35]">Algoma</option>
                             <option value="[43.13, -80.26]">Brant</option>
                             <option value="[44.33, -81.15]">Bruce</option>
                             <option value="[49.06, -81.02]">Cochrane</option>
@@ -119,6 +127,9 @@
                             <option value="[43.25, -79.85]">Hamilton</option>
                             <option value="[44.88, -77.72]">Hastings</option>
                             <option value="[43.73, -81.71]">Huron</option>
+                            <option value="[41.1305303, -82.591828]">Huron2</option>
+
+                            
                             <option value="[49.76, -94.48]">Kenora</option>
                             <option value="[42.40, -82.20]">Kent</option>
                             <option value="[42.95, -82.30]">Lambton</option>
@@ -153,7 +164,7 @@
                             <option value="[44.36, -78.74]">Victoria</option>
                             <option value="[43.47, -80.52]">Waterloo</option>
                             <option value="[43.65, -80.31]">Wellington</option>
-                            <option value="[43.90, -79.44]">York</option>
+                            <option value="[43.90, -79.44]">York</option> -->
                         </select>
 
 
@@ -395,7 +406,7 @@
     </div>
 
   
-
+   
 
     <script src="{{ url_for('static',filename='js/index.js') }}"></script>
 

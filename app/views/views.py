@@ -1,11 +1,20 @@
 from app import app
 from flask import render_template, request, jsonify
 from services import get_request_data,scrape_function
+import json
+
 
 @app.route("/")
 @app.route("/index")
 def index():
-    return render_template("index.html")
+
+    with open('data/cities.json', 'r', encoding='utf-8') as file:
+        cities_data = json.load(file)
+
+
+    # print(cities_data)
+
+    return render_template("index.html", cities= cities_data)
 
 
 @app.route("/send-coordinates", methods=["POST"])

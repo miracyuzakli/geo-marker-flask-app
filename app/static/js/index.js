@@ -1,4 +1,4 @@
-var mymap = L.map('mapid').setView([43.7, -79.42], 10); // Toronto'nun varsayılan koordinatları
+var mymap = L.map('mapid').setView([43.7, -79.42], 12); // Toronto'nun varsayılan koordinatları
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19
 }).addTo(mymap);
@@ -8,28 +8,6 @@ var markers = [];
 var polyline = null;
 
 
-// // ! Modal
-// // Elemanları seç
-// var modal = document.getElementById("myModal");
-// var btn = document.getElementById("modalBtn");
-// var span = document.getElementsByClassName("close")[0];
-
-// // Butona tıklandığında modalı aç
-// btn.onclick = function () {
-//     modal.style.display = "block";
-// }
-
-// // X butonuna tıklandığında modalı kapat
-// span.onclick = function () {
-//     modal.style.display = "none";
-// }
-
-// // Kullanıcı modal dışında bir yere tıklarsa, modalı kapat
-// window.onclick = function (event) {
-//     if (event.target == modal) {
-//         modal.style.display = "none";
-//     }
-// }
 
 // ! Loading Spin
  // Yükleme ekranını ve butonunu seç
@@ -188,5 +166,5 @@ function clearAll() {
 
 function updateMapToSelectedCity() {
     var selectedCityCoordinates = JSON.parse(document.getElementById('option-cities').value);
-    mymap.setView(new L.LatLng(selectedCityCoordinates[0], selectedCityCoordinates[1]), 10);
+    mymap.setView(new L.LatLng(selectedCityCoordinates[0], selectedCityCoordinates[1]), 12);
 }

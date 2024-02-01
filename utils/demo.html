@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Şehir Haritası</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"></script>
+    <style>
+        #mapid { height: 500px; }
+    </style>
+</head>
+<body>
+
+    <select id="citySelector">
+        <option value="Ottawa">Ottawa</option>
+        <!-- Diğer şehir seçenekleri buraya eklenebilir -->
+    </select>
+
+    <div id="mapid"></div>
+
+    <script>
+        // Harita başlatılıyor
+        var map = L.map('mapid').setView([45.4215, -75.6972], 13);
+
+        // OpenStreetMap katmanı ekleniyor
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Şehir sınırları için bir geoJSON verisi (Örnek olarak Ottawa için veri)
+        var cityBounds = {
+            "Ottawa": {
+                "type": "Feature",
+                "properties": {"name": "Ottawa"},
+                "geometry": {
+                    "type": "Polygon",
+                    "coordinates": [
+                        [
+                            [-75.76, 45.35],
+                            [-75.76, 45.45],
+                            [-75.65, 45.45],
+                            [-75.65, 45.35],
+                            [-75.76, 45.35]
+                        ]
+                    ]
+                }
+            }
+            // Diğer şehirler için geoJSON verileri eklenebilir
+        };
+
+        var currentLayer;
+
+        function changeCity(city) {
+            // Varolan katmanı kaldır
+            if (currentLayer) {
+                map.removeLayer(currentLayer);
+            }
+            
+            // Yeni sınırları ekle
+            currentLayer = L.geoJSON(cityBounds[city]).addTo(map);
+            
+            // Haritayı sınırlara göre ayarla
+            map.fitBounds(currentLayer.getBounds());
+        }
+
+        // Şehir seçildiğinde haritayı güncelle
+        document.getElementById('citySelector').addEventListener('change', function(e) {
+            changeCity(e.target.value);
+        });
+
+        // Başlangıçta varsayılan şehri göster
+        changeCity('Ottawa');
+    </script>
+
+</body>
+</html>
