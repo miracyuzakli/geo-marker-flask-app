@@ -8,11 +8,8 @@ import json
 @app.route("/index")
 def index():
 
-    with open('data/cities.json', 'r', encoding='utf-8') as file:
+    with open('data/data1.json', 'r', encoding='utf-8') as file:
         cities_data = json.load(file)
-
-
-    # print(cities_data)
 
     return render_template("index.html", cities= cities_data)
 
