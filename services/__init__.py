@@ -1,1 +1,1 @@
-from .services import get_request_data,scrape_function
+from .services import scrape_function

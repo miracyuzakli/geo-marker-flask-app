@@ -80,25 +80,11 @@ function sendCoordinates() {
     var lot_size_from = getSelectedOptionValue('option-lot-size-from');
     var lot_size_to = getSelectedOptionValue('option-lot-size-to');
 
-    const data = {
-        "city": cities,
+    var city1 = getSelectedOptionText('option-city');
 
-        "sale_date": sale_date_value,
-        "property_type": property_type_value,
+    console.log(city1);
 
-        "price_amount": {
-            "from": price_amount_from,
-            "to": price_amount_to
-        },
-
-        "lot_size": {
-            "from": lot_size_from,
-            "to": lot_size_to
-        },
-
-        coordinates: coordinates
-
-    }
+   
 
     
     loadingScreen.classList.toggle("loading-visible");
@@ -109,6 +95,7 @@ function sendCoordinates() {
         contentType: 'application/json',
         data: JSON.stringify({
             "city": cities,
+            "city_name": city1,
 
             "sale_date": sale_date_value,
             "property_type": property_type_value,

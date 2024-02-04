@@ -21,17 +21,14 @@ from selenium.webdriver.support import expected_conditions as EC
 from geopy.distance import geodesic
 from geopy.point import Point
 import numpy as np
-
-
-
-def get_request_data(city, sale_date, property_type, price_amount, lot_size, coordinates):
-
-    print(f'city: {city}\nsale_date: {sale_date}\nproperty_type: {property_type},\nprice_amount: {price_amount}\nlot_size: {lot_size}\ncoordinates: {coordinates}')
+import os
 
 
 
 
-def scrape_function(city, sale_date, property_type, price_amount, lot_size, coordinates):
+def scrape_function(city, city_name, sale_date, property_type, price_amount, lot_size, coordinates):
+
+
 
     if sale_date == '30 days':
         last_date = 30
@@ -42,7 +39,7 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
     else:
         last_date = 365
     
-    with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','r',encoding='utf-8') as file:
+    with open(os.path.join("services", 'cookie.txt'),'r',encoding='utf-8') as file:
         cookie = file.read()
     
     # payload = json.dumps({
@@ -116,12 +113,12 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
                 break
         print('Line 175',cookie)
 
-        with open(r'C:\Users\Derek\Dropbox\My PC (DESKTOP-CMIFD5K)\Desktop\Boran ProjectFolder\verification program\Geowarehouse_cookie.txt','w') as file:
+        with open(os.path.join("services", 'cookie.txt'),'w') as file:
             file.write(cookie)
         
         print(coordinates)
 
-        with open(r'C:\Users\oktay\Desktop\geo-marker-flask-app\services\cookie.txt','r') as file:
+        with open(os.path.join("services", 'cookie.txt'),'r') as file:
             cookie = file.read()
 
     region_to_lro = {
@@ -229,7 +226,7 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
     min_price = min_price.replace('$','')
     max_price = price_amount.get('to')
     max_price = max_price.replace('$','')
-    city_value = region_to_lro.get(city)
+    city_value = region_to_lro.get(city_name)
     for key,value in results.items():
         
         latitude = value[0]
