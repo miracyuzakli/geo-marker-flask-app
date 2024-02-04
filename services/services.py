@@ -25,8 +25,11 @@ import os
 
 
 
+# from services import driver
 
-def scrape_function(city, city_name, sale_date, property_type, price_amount, lot_size, coordinates):
+
+
+def scrape_function(city, city_name, sale_date, property_type, price_amount, lot_size, coordinates, driver):
 
 
 
@@ -71,7 +74,7 @@ def scrape_function(city, city_name, sale_date, property_type, price_amount, lot
 
     if response.status_code != 200:
 
-        driver = webdriver.Chrome()
+        # driver = webdriver.Chrome()
         driver.get('https://treb.clareityiam.net/idp/login')
         time.sleep(60)
         time.sleep(3)                                                                     

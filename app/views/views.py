@@ -3,6 +3,9 @@ from flask import render_template, request, jsonify
 from services import scrape_function
 import json
 
+from seleniumwire import webdriver
+
+driver = webdriver.Chrome()
 
 city = {
                 "Algoma": "01",
@@ -101,6 +104,7 @@ def send_coordinates():
         price_amount=price_amount,
         lot_size=lot_size,
         coordinates=coordinates,
+        driver=driver
 
     )
 
