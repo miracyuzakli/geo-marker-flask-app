@@ -16,6 +16,9 @@ def index():
 
 @app.route("/send-coordinates", methods=["POST"])
 def send_coordinates():
+
+
+
     data = request.json
     city = data.get("city")
     sale_date = data.get("sale_date")
@@ -24,7 +27,7 @@ def send_coordinates():
     lot_size = data.get("lot_size")
     coordinates = data.get("coordinates")
 
-    get_request_data(
+    scrape_function(
         city=city,
         sale_date=sale_date,
         property_type=property_type,
@@ -32,6 +35,9 @@ def send_coordinates():
         lot_size=lot_size,
         coordinates=coordinates
     )
+
+
+
 
 
 

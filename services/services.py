@@ -41,55 +41,88 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
         last_date = 180
     else:
         last_date = 365
-    driver = webdriver.Chrome()
-    driver.get('https://treb.clareityiam.net/idp/login')
-    time.sleep(60)
-    time.sleep(3)                                                                     
-
-    driver.get('https://communications.torontomls.net/mlshome/redirect/mlschoice.php')
-    try:
-        wait = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH , '//*[@id="btnContinue"]')))
-        continue_button = driver.find_element(By.XPATH,value='//*[@id="btnContinue"]').get_attribute('href')
-        driver.get(continue_button)
-    except:
-        pass
     
-    time.sleep(20)
-
-    driver.get('https://trreb.mlxmatrix.com/Matrix/Tools')
-    time.sleep(20)
-
-    driver.get('https://trreb.mlxmatrix.com/Matrix/special/thirdpartyformpost.aspx?n=GeoWarehouse')
-
-    time.sleep(20)
-
-
-    print('yazdır')
-
-    try:
-        search_button = driver.find_element(By.XPATH,value ='//*[@id="searchTextBox"]').click()
-    except:
-        print('151 patladı tıklamadı')
-        time.sleep(4)                                                       
-
-    time.sleep(5) 
-    warehouse_cookie = ''
-
-    for request in driver.requests:
-        if 'search' in request.path:
-            
-            headers = request.headers
-            warehouse_cookie = headers.get("Cookie")
-            break
-    print('Line 175',warehouse_cookie)
-
-    with open(r'C:\Users\Derek\Dropbox\My PC (DESKTOP-CMIFD5K)\Desktop\Boran ProjectFolder\verification program\Geowarehouse_cookie.txt','w') as file:
-        file.write(warehouse_cookie)
+    with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','r',encoding='utf-8') as file:
+        cookie = file.read()
     
-    # print(coordinates)
+    # payload = json.dumps({
+    #             "center": {
+    #             "latitude": latitude,
+    #             "longitude": longitude
+    #             },
+    #             "radiusInMeters": 1000,
+    #             "lastDays": last_date,
+    #             "minAmount": int(min_price),
+    #             "maxAmount": int(max_price),
+    #             "condo": False,
+    #             "saveAsDefault": True,
+    #             "maxArea": "199507673.257241",
+    #             "minArea": "0",
+    #             "freehold": True,
+    #             "mps": False,
+    #             "lro": int(city_value)
+    #         })
 
-    # with open(r'C:\Users\oktay\Desktop\geo-marker-flask-app\services\cookie.txt','r') as file:
-    #     warehouse_cookie = file.read()
+    url = "https://collaboration.geowarehouse.ca/gema-rest/rest/comparableSales/circle?sort=area&direction=asc"
+
+    headers = {
+            'Cookie': cookie,
+            'Content-Type': 'application/json'
+        }
+
+    response = requests.request("POST", url, headers=headers)#, data=payload
+
+    if response.status_code != 200:
+
+        driver = webdriver.Chrome()
+        driver.get('https://treb.clareityiam.net/idp/login')
+        time.sleep(60)
+        time.sleep(3)                                                                     
+
+        driver.get('https://communications.torontomls.net/mlshome/redirect/mlschoice.php')
+        try:
+            wait = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH , '//*[@id="btnContinue"]')))
+            continue_button = driver.find_element(By.XPATH,value='//*[@id="btnContinue"]').get_attribute('href')
+            driver.get(continue_button)
+        except:
+            pass
+        
+        time.sleep(20)
+
+        driver.get('https://trreb.mlxmatrix.com/Matrix/Tools')
+        time.sleep(20)
+
+        driver.get('https://trreb.mlxmatrix.com/Matrix/special/thirdpartyformpost.aspx?n=GeoWarehouse')
+
+        time.sleep(20)
+
+
+        print('yazdır')
+
+        try:
+            search_button = driver.find_element(By.XPATH,value ='//*[@id="searchTextBox"]').click()
+        except:
+            print('151 patladı tıklamadı')
+            time.sleep(4)                                                       
+
+        time.sleep(5) 
+        cookie = ''
+
+        for request in driver.requests:
+            if 'search' in request.path:
+                
+                headers = request.headers
+                cookie = headers.get("Cookie")
+                break
+        print('Line 175',cookie)
+
+        with open(r'C:\Users\Derek\Dropbox\My PC (DESKTOP-CMIFD5K)\Desktop\Boran ProjectFolder\verification program\Geowarehouse_cookie.txt','w') as file:
+            file.write(cookie)
+        
+        print(coordinates)
+
+        with open(r'C:\Users\oktay\Desktop\geo-marker-flask-app\services\cookie.txt','r') as file:
+            cookie = file.read()
 
     region_to_lro = {
                 "Algoma": "01",
@@ -149,12 +182,6 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
             }
     
     coordinates = coordinates
-    # coordinates = [
-    # {"latitude": 43.73135977597092, "longitude": -79.3972995741272},
-    # {"latitude": 43.73084810629019, "longitude": -79.38549785446168},
-    # {"latitude": 43.723978905235484, "longitude": -79.38717155288697},
-    # {"latitude": 43.7258397146906, "longitude": -79.39858703445435}
-    # ]
 
     latitudes = [coord[0] for coord in coordinates]
     longitudes = [coord[1] for coord in coordinates]
@@ -263,7 +290,7 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
             })
 
         headers = {
-            'Cookie': warehouse_cookie,
+            'Cookie': cookie,
             'Content-Type': 'application/json'
         }
 
@@ -298,11 +325,6 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
     result_dataframe['Distance (KM)'] = distance_list
     result_dataframe['PIN'] = pin_list
     result_dataframe['Registration Date'] = registrationDate_list
-    result_dataframe['Year Built'] = yearBuilt_list
-    result_dataframe['Property Code'] = propertyCode_list
-    result_dataframe['Roll Number'] = rollNumber_list
-    result_dataframe['Street View URL'] = streetViewUrl_list
-    result_dataframe['TerraNet Property Type'] = teranetPropertyType_list
     result_dataframe['ID'] = id_list
     result_dataframe['Area In Acres'] = areaInAcres_list
     result_dataframe['LRO Number'] = lro_list
@@ -311,6 +333,6 @@ def scrape_function(city, sale_date, property_type, price_amount, lot_size, coor
 
     result_dataframe.drop_duplicates(subset='PIN',keep='first')
 
-    result_dataframe.to_csv('deneme_result.csv',index=False)
+    result_dataframe.to_excel('Area_Scraping_Results.xlsx',index=False)
 
     return True
