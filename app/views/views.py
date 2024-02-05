@@ -100,16 +100,6 @@ def send_coordinates():
         coordinates=coordinates,
     )
 
-    # scrape_function(
-    #     city=city,
-    #     city_name=city_name,
-    #     sale_date=sale_date,
-    #     property_type=property_type,
-    #     price_amount=price_amount,
-    #     lot_size=lot_size,
-    #     coordinates=coordinates,
-    #     driver=driver
-
-    # )
+ 
 
     return jsonify({"status": "success"})

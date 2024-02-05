@@ -468,6 +468,7 @@ class GeoWarehouseScraper:
             
             
             
+            # driver.get('https://google.com/')
             driver.get('https://treb.clareityiam.net/idp/login')
             time.sleep(60)
             time.sleep(3)                                                                     
@@ -519,6 +520,8 @@ class GeoWarehouseScraper:
             print("get_cookies function finished")
             return True
         
+        else:
+             return False
 
 
 
@@ -532,6 +535,11 @@ class GeoWarehouseScraper:
             last_date = 180
         else:
             last_date = 365
+
+
+        self.get_cookies()
+
+
         
         latitudes = [coord[0] for coord in coordinates]
         longitudes = [coord[1] for coord in coordinates]
