@@ -1,1 +1,1 @@
-from .services import scrape_function
+from .services import GeoWarehouseScraper
