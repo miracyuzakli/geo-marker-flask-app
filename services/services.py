@@ -180,7 +180,7 @@ class GeoWarehouseScraper:
 
 
 
-    def run_scrabe(self, city, city_name, sale_date, property_type, price_amount, lot_size, coordinates):
+    def run_scrabe(self, city, city_name, sale_date, property_type, price_amount, lot_size, coordinates, start_date, end_date):
 
         if sale_date == '30 days':
             last_date = 30

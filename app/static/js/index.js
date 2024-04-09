@@ -82,8 +82,10 @@ function sendCoordinates() {
 
     var city1 = getSelectedOptionText('option-city');
 
-    console.log(city1);
+    var custom_start_date = document.getElementById('start-date').value;
+    var custom_end_date = document.getElementById('end-date').value;
 
+    console.log(custom_start_date)
    
 
     
@@ -108,6 +110,11 @@ function sendCoordinates() {
             "lot_size": {
                 "from": lot_size_from,
                 "to": lot_size_to
+            },
+
+            "custom_date": {
+                "start_date": custom_start_date,
+                "end_date": custom_end_date
             },
 
             coordinates: coordinates
@@ -155,3 +162,29 @@ function updateMapToSelectedCity() {
     var selectedCityCoordinates = JSON.parse(document.getElementById('option-cities').value);
     mymap.setView(new L.LatLng(selectedCityCoordinates[0], selectedCityCoordinates[1]), 12);
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    // Tarihleri hesapla
+    const today = new Date();
+    const oneWeekAgo = new Date(today.getFullYear(), today.getMonth(), today.getDate() - 7);
+
+    // Tarih formatını YYYY-MM-DD olarak ayarla
+    const formatDate = (date) => {
+        let d = new Date(date),
+            month = '' + (d.getMonth() + 1),
+            day = '' + d.getDate(),
+            year = d.getFullYear();
+
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+            day = '0' + day;
+
+        return [year, month, day].join('-');
+    };
+
+    // Giriş alanlarını bul ve değerleri ayarla
+    document.querySelector('input[name="start"]').value = formatDate(oneWeekAgo);
+    document.querySelector('input[name="end"]').value = formatDate(today);
+});

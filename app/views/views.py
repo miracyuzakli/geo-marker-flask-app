@@ -89,7 +89,9 @@ def send_coordinates():
     price_amount = data.get("price_amount")
     lot_size = data.get("lot_size")
     coordinates = data.get("coordinates")
-
+    start_date = data.get("custom_date")["start_date"]
+    end_date = data.get("custom_date")["end_date"]
+    print(start_date, end_date)
     scrabe.run_scrabe(
         city=city,
         city_name=city_name,
@@ -98,6 +100,8 @@ def send_coordinates():
         price_amount=price_amount,
         lot_size=lot_size,
         coordinates=coordinates,
+        start_date= start_date,
+        end_date= end_date
     )
 
  
