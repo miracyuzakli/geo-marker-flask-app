@@ -24,7 +24,7 @@ import numpy as np
 import os
 from seleniumwire import webdriver
 from selenium.webdriver.chrome.options import Options
-
+from datetime import datetime
 
 
 
@@ -97,86 +97,7 @@ class GeoWarehouseScraper:
         
         # self.get_cookies()
 
-    def get_cookies(self):
-
-        print("get_cookies function started for cookies")
-
-        url = "https://collaboration.geowarehouse.ca/gema-rest/rest/comparableSales/circle?sort=area&direction=asc"
-
-        with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','r',encoding='utf-8') as file:
-            cookie = file.read()
-
-        headers = {
-                'Cookie': cookie,
-                'Content-Type': 'application/json'
-            }
-
-        response = requests.request("POST", url, headers=headers)#, data=payload
-
-        if response.status_code != 200:
-
-            chrome_options = Options()
-            chrome_options.add_experimental_option("detach", True)
-            driver = webdriver.Chrome(options=chrome_options)
-
-
-            
-            
-            
-            driver.get('https://google.com/')
-            # driver.get('https://treb.clareityiam.net/idp/login')
-            # time.sleep(60)
-            # time.sleep(3)                                                                     
-
-            # driver.get('https://communications.torontomls.net/mlshome/redirect/mlschoice.php')
-            # try:
-            #     wait = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH , '//*[@id="btnContinue"]')))
-            #     continue_button = driver.find_element(By.XPATH,value='//*[@id="btnContinue"]').get_attribute('href')
-            #     driver.get(continue_button)
-            # except:
-            #     pass
-            
-            # time.sleep(5)
-
-            # driver.get('https://trreb.mlxmatrix.com/Matrix/Tools')
-            # time.sleep(5)
-
-            # driver.get('https://trreb.mlxmatrix.com/Matrix/special/thirdpartyformpost.aspx?n=GeoWarehouse')
-
-            # time.sleep(5)
-
-
-            # print('yazdır')
-
-            # try:
-            #     search_button = driver.find_element(By.XPATH,value ='//*[@id="searchTextBox"]').click()
-            # except:
-            #     print('151 patladı tıklamadı')
-            #     time.sleep(4)                                                       
-
-            # time.sleep(5) 
-            # cookie = ''
-
-            # for request in driver.requests:
-            #     if 'search' in request.path:
-                    
-            #         headers = request.headers
-            #         cookie = headers.get("Cookie")
-            #         break
-            # print('Line 175',cookie)
-
-            # with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','w') as file:
-            #     file.write(cookie)
-            
-            # with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','r') as file:
-            #     cookie = file.read()
-
-
-            print("get_cookies function finished")
-            return True
-        
-        else:
-            return False
+    
 
 
 
@@ -191,68 +112,18 @@ class GeoWarehouseScraper:
         else:
             last_date = 365
 
+        start_date = datetime.strptime(start_date, '%Y-%m-%d')
+        start_date = start_date.strftime('%Y/%m/%d %H:%M')
+        start_date = start_date.replace('00:00', '00:00')  # Zaten '00:00' olarak formatlandı, tekrar emin olmak için
 
-        # test_run = self.get_cookies()
+        # end_date için datetime objesine çevir ve '23:59' saatini ekle
+        end_date = datetime.strptime(end_date, '%Y-%m-%d')
+        end_date = end_date.strftime('%Y/%m/%d %H:%M')
+        end_date = end_date.replace('00:00', '23:59')
 
-        # if test_run:
-        #     pass
-        # else:
-        #     chrome_options = Options()
-        #     chrome_options.add_experimental_option("detach", True)
-        #     driver = webdriver.Chrome(options=chrome_options)
-
-        #     driver.get('https://google.com/')
-        #     # driver.get('https://treb.clareityiam.net/idp/login')
-        #     # time.sleep(60)
-        #     # time.sleep(3)                                                                     
-
-        #     # driver.get('https://communications.torontomls.net/mlshome/redirect/mlschoice.php')
-        #     # try:
-        #     #     wait = WebDriverWait(driver, 30).until(EC.presence_of_element_located((By.XPATH , '//*[@id="btnContinue"]')))
-        #     #     continue_button = driver.find_element(By.XPATH,value='//*[@id="btnContinue"]').get_attribute('href')
-        #     #     driver.get(continue_button)
-        #     # except:
-        #     #     pass
-            
-        #     # time.sleep(5)
-
-        #     # driver.get('https://trreb.mlxmatrix.com/Matrix/Tools')
-        #     # time.sleep(5)
-
-        #     # driver.get('https://trreb.mlxmatrix.com/Matrix/special/thirdpartyformpost.aspx?n=GeoWarehouse')
-
-        #     # time.sleep(5)
-
-
-        #     # print('yazdır')
-
-        #     # try:
-        #     #     search_button = driver.find_element(By.XPATH,value ='//*[@id="searchTextBox"]').click()
-        #     # except:
-        #     #     print('151 patladı tıklamadı')
-        #     #     time.sleep(4)                                                       
-
-        #     # time.sleep(5) 
-        #     # cookie = ''
-
-        #     # for request in driver.requests:
-        #     #     if 'search' in request.path:
-                    
-        #     #         headers = request.headers
-        #     #         cookie = headers.get("Cookie")
-        #     #         break
-        #     # print('Line 175',cookie)
-
-        #     # with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','w') as file:
-        #     #     file.write(cookie)
-            
-        #     # with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','r') as file:
-        #     #     cookie = file.read()
-
-
-        #     # print("get_cookies function finished")
-
-        with open(r'C:\Users\oktay\Desktop\Boran Files 2\geo-marker-flask-app\services\cookie.txt','r',encoding='utf-8') as file:
+        print(start_date,end_date)
+        
+        with open(r'C:\Users\oktay\Desktop\geo-marker-flask-app\services\cookie.txt','r',encoding='utf-8') as file:
             cookie = file.read()
         
         latitudes = [coord[0] for coord in coordinates]
@@ -307,66 +178,85 @@ class GeoWarehouseScraper:
             latitude = value[0]
             longitude = value[1]
             if property_type == 'Freehold':
-                payload = json.dumps({
-                    "center": {
-                    "latitude": latitude,
-                    "longitude": longitude
-                    },
-                    "radiusInMeters": 1000,
-                    "lastDays": last_date,
-                    "minAmount": int(min_price),
-                    "maxAmount": int(max_price),
-                    "condo": False,
-                    "saveAsDefault": True,
-                    "maxArea": "199507673.257241",
-                    "minArea": "0",
-                    "freehold": True,
-                    "mps": False,
-                    "lro": int(city_value)
-                })
+                payload = json.dumps({"center":
+                 {"latitude":latitude,
+                  "longitude":longitude}
+                 ,"radiusInMeters":1000,
+                 "minDate":start_date,
+                 "maxDate":end_date,
+                 "minAmount":int(min_price),
+                 "maxAmount":int(max_price),
+                 "condo":False,
+                 "saveAsDefault":True,
+                 "maxArea":"199507673.257241",
+                 "minArea":"0",
+                 "freehold":True,
+                 "mps":False,
+                 "lro":int(city_value)
+                 })
             elif property_type == 'Condo':
-                payload = json.dumps({
-                    "center": {
-                    "latitude": latitude,
-                    "longitude": longitude
-                    },
-                    "radiusInMeters": 1000,
-                    "lastDays": last_date,
-                    "minAmount": int(min_price),
-                    "maxAmount": int(max_price),
-                    "condo": True,
-                    "saveAsDefault": True,
-                    "maxArea": "199507673.257241",
-                    "minArea": "0",
-                    "freehold": False,
-                    "mps": False,
-                    "lro": int(city_value)
-                })
+                payload = json.dumps({"center":
+                 {"latitude":latitude,
+                  "longitude":longitude}
+                 ,"radiusInMeters":1000,
+                 "minDate":start_date,
+                 "maxDate":end_date,
+                 "minAmount":int(min_price),
+                 "maxAmount":int(max_price),
+                 "condo":True,
+                 "saveAsDefault":True,
+                 "maxArea":"199507673.257241",
+                 "minArea":"0",
+                 "freehold":False,
+                 "mps":False,
+                 "lro":int(city_value)
+                 })
             else:
-                payload = json.dumps({
-                    "center": {
-                    "latitude": latitude,
-                    "longitude": longitude
-                    },
-                    "radiusInMeters": 1000,
-                    "lastDays": last_date,
-                    "minAmount": int(min_price),
-                    "maxAmount": int(max_price),
-                    "condo": True,
-                    "saveAsDefault": True,
-                    "maxArea": "199507673.257241",
-                    "minArea": "0",
-                    "freehold": True,
-                    "mps": False,
-                    "lro": int(city_value)
-                })
+                payload = json.dumps(
+                    {"center":
+                 {"latitude":latitude,
+                  "longitude":longitude}
+                 ,"radiusInMeters":1000,
+                 "minDate":start_date,
+                 "maxDate":end_date,
+                 "minAmount":int(min_price),
+                 "maxAmount":int(max_price),
+                 "condo":True,
+                 "saveAsDefault":True,
+                 "maxArea":"199507673.257241",
+                 "minArea":"0",
+                 "freehold":True,
+                 "mps":False,
+                 "lro":int(city_value)
+                 }
+                )
+
+                # {"center":
+                #  {"latitude":latitude,
+                #   "longitude":longitude}
+                #  ,"radiusInMeters":1000,
+                #  "minDate":start_date,
+                #  "maxDate":end_date,
+                #  "minAmount":int(min_price),
+                #  "maxAmount":int(max_price),
+                #  "condo":True,
+                #  "saveAsDefault":True,
+                #  "maxArea":"199507673.257241",
+                #  "minArea":"0",
+                #  "freehold":True,
+                #  "mps":False,
+                #  "lro":int(city_value)
+                #  }
 
             headers = {
                 'Cookie': cookie,
                 'Content-Type': 'application/json'
             }
-
+            
             response = requests.request("POST", url, headers=headers, data=payload)
+
+            # print("Payload:",payload)
+            # print("Cookie: ",cookie)
             if response.status_code == 200:
                 if len(response.json()['sales']) > 0:
                     for item in range(len(response.json()['sales'])):
@@ -388,7 +278,16 @@ class GeoWarehouseScraper:
                         lro_list.append(value['lro'])
                         useAcres_list.append(value['useAcres'])
                         saleAddressStr_list.append(value['saleAddressStr'])
+                else:
+                    print('Line 282 else')
+                    print('Payload:',payload)
+                    print('*'*10)
+                    print(response.json())
+                    # break
             else:       
+                print('Boş geliyor')
+                print('Status Code:',response.status_code)
+                # break
                 area_list.append('')
                 condo_list.append('')
                 considerationAmount_list.append('')
